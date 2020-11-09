@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My amazing blog{% endblock %}
+
+
+{% block page_content %}
+
+    <div class="col-md-8 offset-md-2">
+        <h1>Blog Index</h1>
+        <hr>
+        {% for post in posts %}
+            <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+            <small>
+                {{ post.created_at.date }} |&nbsp;
+                                           Categories:&nbsp;
+                {% for category in post.categories.all %}
+                    <a href="{% url 'post_category' category.name %}">
+                        {{ category.name }}
+                    </a>&nbsp;
+                {% endfor %}
+            </small>
+            <p>{{ post.content | slice:":100" }}...</p>
+        {% empty %}
+            <p>Sorry, no posts we published...</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
