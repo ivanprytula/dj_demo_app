@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block page_content %}
+{% block content %}
 
     <div class="col-md-8 offset-md-2">
         <h1>{{ post.title }}</h1>
@@ -7,7 +7,7 @@
             {{ post.created_at.date }} |&nbsp;
                                        Categories:&nbsp;
             {% for category in post.categories.all %}
-                <a href="{% url 'post_category' category.name %}">
+                <a href="{% url 'blog:post_category' category.name %}">
                     {{ category.name }}
                 </a>&nbsp;
             {% endfor %}

@@ -1,5 +1,12 @@
 from django import forms
 
+from blog.models import Post
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+
 
 class CommentForm(forms.Form):
     """The author field has the forms.TextInput widget. This tells Django to load this field as an HTML text input

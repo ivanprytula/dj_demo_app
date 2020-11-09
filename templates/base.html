@@ -15,14 +15,23 @@
     {% block custom_css %}
     {% endblock %}
 
-    <title>{% block title %}My amazing site{% endblock %}</title>
+    <title>{% block title %}Demo blog app{% endblock %}</title>
+
+    <style>
+      label, input {
+        display: block;
+      }
+      span.helptext {
+        display: none;
+      }
+    </style>
 </head>
 <body>
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'blog_index' %}">LOGO HERE</a>
+            <a class="navbar-brand" href="{% url 'dashboard' %}">LOGO HERE</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -31,7 +40,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'blog_index' %}">Blog</a>
+                        <a class="nav-link" href="{% url 'blog:blog_index' %}">Blog</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link"
@@ -45,7 +54,7 @@
 {% endblock %}
 
 <div class="container">
-    {% block page_content %}{% endblock %}
+    {% block content %}{% endblock %}
 </div>
 
 
