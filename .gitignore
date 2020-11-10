@@ -1,11 +1,23 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-.vscode
+.vscode/
 .DS_Store
 
+# Environments
 venv/
-
+env/
 .env
+.venv
+ENV/
 
+### Python template
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
