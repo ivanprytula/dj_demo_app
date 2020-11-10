@@ -1,75 +1,98 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.urls import reverse_lazy
+from django.views.generic import (ListView, CreateView, TemplateView, )
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import (UpdateView, DeleteView, )
 
-from blog.forms import CommentForm
-from blog.models import Post, Comment
+from blog.models import Post
 
 
-class BlogHomeView(TemplateView):
+class BlogListView(ListView):
     """View for blog home page."""
-
-    template_name = 'blog/blog_index.html'
+    model = Post
+    template_name = 'blog/blog_list.html'
+    context_object_name = 'posts'
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.all().order_by('-created_at')
+        posts = self.get_queryset()
+        page = self.request.GET.get('page')
+        paginator = Paginator(posts, self.paginate_by)
+
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+        context['posts'] = posts
         return context
 
 
-# class BlogCategory(TemplateView):
-#     """It takes a category name as an argument and
-#     query the Post database for all posts that have been assigned
-#     the given category."""
-#
-#     template_name = 'blog/blog_category.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['category'] = kwargs.get('category')
-#         context['posts_with_given_category'] = Post.objects. \
-#             filter(categories__name__contains=context['category']). \
-#             order_by('-created_at')
-#         return context
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'blog/post_create.html'
+    fields = '__all__'
+    success_url = reverse_lazy('blog_list')
 
 
-# def blog_index(request):
-#     posts = Post.objects.all().order_by('-created_at')
+class BlogCategory(TemplateView):
+    """It takes a category name as an argument and
+    query the Post database for all posts that have been assigned
+    the given category."""
+
+    template_name = 'blog/blog_category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = kwargs.get('category')
+        context['posts'] = Post.objects. \
+            filter(categories__name__contains=context['category'])
+        return context
+
+
+class PostDetailView(DetailView):
+    """"""
+    model = Post
+    template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
+
+
+# def post_detail(request, pk):
+#     post = Post.objects.get(pk=pk)
+#
+#     # We create empty form when user visits a page
+#     form = CommentForm()
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = Comment(
+#                 author=form.cleaned_data['author'],
+#                 content=form.cleaned_data['content'],
+#                 post=post
+#             )
+#             comment.save()
+#
+#     comments = Comment.objects.filter(post=post)
 #     context = {
-#         'posts': posts
+#         'post': post,
+#         'comments': comments,
+#         'form': form,
 #     }
-#     return render(request, 'blog/blog_index.html', context)
+#     return render(request, 'blog/post_detail.html', context)
+
+class PostUpdateView(UpdateView):
+    model = Post
+    template_name = 'blog/post_update.html'
+    context_object_name = 'post'
+    fields = ('title', 'content', 'categories')
+
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'pk': self.object.id})
 
 
-def post_category(request, category):
-    posts = Post.objects.filter(categories__name__contains=category
-                                ).order_by('-created_at')
-
-    context = {
-        'category': category,
-        'posts': posts
-    }
-    return render(request, 'blog/blog_category.html', context)
-
-
-def post_detail(request, pk):
-    post = Post.objects.get(pk=pk)
-
-    # We create empty form when user visits a page
-    form = CommentForm()
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = Comment(
-                author=form.cleaned_data['author'],
-                content=form.cleaned_data['content'],
-                post=post
-            )
-            comment.save()
-
-    comments = Comment.objects.filter(post=post)
-    context = {
-        'post': post,
-        'comments': comments,
-        'form': form,
-    }
-    return render(request, 'blog/post_detail.html', context)
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('blog_list')

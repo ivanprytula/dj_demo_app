@@ -9,6 +9,9 @@ class Post(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField(to='Category', related_name='posts')
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return self.title
 
