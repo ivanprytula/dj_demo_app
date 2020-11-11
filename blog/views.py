@@ -8,7 +8,8 @@ from blog.models import Post
 
 
 class BlogListView(ListView):
-    """View for blog home page."""
+    """Blog blog home page view with pagination."""
+
     model = Post
     template_name = 'blog/blog_list.html'
     context_object_name = 'posts'
@@ -31,29 +32,17 @@ class BlogListView(ListView):
 
 
 class PostCreateView(CreateView):
+    """Post create view with all model fields."""
+
     model = Post
     template_name = 'blog/post_create.html'
     fields = '__all__'
     success_url = reverse_lazy('blog_list')
 
 
-class BlogCategory(TemplateView):
-    """It takes a category name as an argument and
-    query the Post database for all posts that have been assigned
-    the given category."""
-
-    template_name = 'blog/blog_category.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['category'] = kwargs.get('category')
-        context['posts'] = Post.objects. \
-            filter(categories__name__contains=context['category'])
-        return context
-
-
 class PostDetailView(DetailView):
-    """"""
+    """Post details view accessed by primary key."""
+
     model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
@@ -96,3 +85,18 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('blog_list')
+
+
+class BlogCategory(TemplateView):
+    """It takes a category name as an argument and
+    query the Post database for all posts that have been assigned
+    the given category."""
+
+    template_name = 'blog/blog_category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = kwargs.get('category')
+        context['posts'] = Post.objects. \
+            filter(categories__name__contains=context['category'])
+        return context

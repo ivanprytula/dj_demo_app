@@ -1,17 +1,18 @@
 {% extends '__base.html' %}
+
 {% block content %}
 
     <div class="col-md-8 offset-md-2">
         <h1>{{ post.title }}</h1>
-        <small>
-            {{ post.created_at.date }} |&nbsp;
-                                       Categories:&nbsp;
-            {% for category in post.categories.all %}
-                <a href="{% url 'blog:post_category' category.name %}">
-                    {{ category.name }}
-                </a>&nbsp;
-            {% endfor %}
-        </small>
+        <p>By {{ post.author }}</p>
+
+        {{ post.created_at.date }} |&nbsp;
+                                   Categories:&nbsp;
+        {% for category in post.categories.all %}
+            <a href="{% url 'blog:post_category' category.name %}">
+                {{ category.name }}
+            </a>&nbsp;
+        {% endfor %}
         <p>{{ post.content | linebreaks }}</p>
 
         <h3>Leave a comment:</h3>
