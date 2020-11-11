@@ -36,3 +36,6 @@ RUN pipenv install --system
 
 # Layer 7. Copy project
 COPY . /usr/src/app_djtwitter_clone/
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app_djtwitter_clone/entrypoint.sh"]

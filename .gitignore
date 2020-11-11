@@ -6,7 +6,7 @@
 # Environments
 venv/
 env/
-.env
+.env.dev
 .venv
 ENV/
 
