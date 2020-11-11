@@ -46,12 +46,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
+                        <a class="nav-link active"
+                           href="{% url 'pages:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'blog:blog_list' %}">Blog</a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link"
-                           href="https://python.org"
-                           target="_blank">Python Official</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'pages:about' %}">About</a>
                     </li>
                 </ul>
             </div>

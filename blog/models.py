@@ -20,7 +20,10 @@ class Post(models.Model):
 
 class Comment(models.Model):
     """Comment to post from other user."""
-    author = models.CharField(max_length=60)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+    )
     content = models.TextField(blank=False, default='Enter your comment...')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     post = models.ForeignKey(to='Post', on_delete=models.CASCADE)

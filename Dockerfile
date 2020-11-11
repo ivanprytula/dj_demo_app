@@ -31,14 +31,8 @@ RUN pip install --upgrade pip && pip install pipenv
 COPY Pipfile Pipfile.lock /usr/src/app_djtwitter_clone/
 
 # Layer 6.
+# [packages] [dev-packages]
 RUN pipenv install --system
 
-# Layer 7.
-COPY ./entrypoint.sh /usr/src/app_djtwitter_clone/entrypoint.sh
-
-# Layer 8. Copy project
+# Layer 7. Copy project
 COPY . /usr/src/app_djtwitter_clone/
-
-# Layer 9.
-# run entrypoint.sh
-ENTRYPOINT ['/usr/src/app_djtwitter_clone/entrypoint.sh']

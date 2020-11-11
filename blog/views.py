@@ -35,7 +35,7 @@ class PostCreateView(CreateView):
     """Post create view with all model fields."""
 
     model = Post
-    template_name = 'blog/post_create.html'
+    template_name = 'blog/post_new.html'
     fields = '__all__'
     success_url = reverse_lazy('blog_list')
 

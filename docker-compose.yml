@@ -3,25 +3,26 @@ version: '3.7'
 services:
   db:
     container_name: postgres_container
-    image: postgres
+    image: "postgres" # use latest official postgres version
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=djtwitter_db
-      - POSTGRES_USER=ivan-admin
-      - POSTGRES_PASSWORD=rootboot
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
 
   web:
-    # build from Dockerfile
-    build: .
-    entrypoint: ./entrypoint.sh
-    command: python manage.py runserver 0.0.0.0:8001
+    build:
+      context: . # build from Dockerfile
     volumes:
       - .:/usr/src/app_djtwitter_clone
     #  maps ports and container code/database to local filesystem
     ports:
-      - "8001:8001"
+      - "8000:8000"
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
     env_file:
       - ./.env
     depends_on:

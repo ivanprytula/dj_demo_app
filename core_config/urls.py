@@ -15,25 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
-
-from . import sandbox_views
-
-# testing urls
-extra_patterns = [
-    path('see_request/', sandbox_views.see_request),
-    path('user_info/', sandbox_views.user_info),
-    path('private_place/', sandbox_views.private_place),
-    path('staff_place/', sandbox_views.staff_place),
-    path('add_messages/', sandbox_views.add_messages),
-]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', TemplateView.as_view(template_name='dashboard.html'), name='dashboard'),
+    path('', include('pages.urls')),
     path('blog/', include('blog.urls')),
-    path('test/', include(extra_patterns)),
-
 ]
