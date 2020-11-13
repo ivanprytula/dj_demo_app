@@ -12,6 +12,9 @@ Next. In repo directory.
 
 * Docker way
    - `$ docker build -t <your_name>/<app_name>:<tag> .`
+   - Tag image after it was created:
+        - `$ docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
+        - example: `$ docker tag dj_demo_app_web ivanprytula/dj_twitter_clone:0.1`
    - `$ docker run -d -t 8001:8001 <your_name>/<app_name>:<tag>`
    
 * docker-compose way
@@ -30,3 +33,5 @@ Next. In repo directory.
     - When you're done, don't forget to close down your Docker containers.
         - `$ docker-compose down`
         - `$ docker-compose down -v` to remove the volumes along with the containers.
+
+### Create
