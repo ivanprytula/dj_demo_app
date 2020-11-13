@@ -15,8 +15,6 @@ Next. In repo directory.
    - `$ docker run -d -t 8001:8001 <your_name>/<app_name>:<tag>`
    
 * docker-compose way
-    - Update the file permissions locally:
-        - `$ chmod +x entrypoint.sh`
     - Build the new image and spin up the two containers:
         - `$ docker-compose up -d --build`
     - Run the migrations:

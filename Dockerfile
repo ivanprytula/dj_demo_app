@@ -15,7 +15,7 @@ WORKDIR /usr/src/app_djtwitter_clone
 
 # Layer 3. Install psycopg2 dependencies
 RUN apt-get update \
-    && apt-get install -qq -y --no-install-recommends build-essential libpq-dev gcc \
+    && apt-get install -qq -y --no-install-recommends build-essential libpq-dev gcc netcat \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Layer 4. Install dependencies
@@ -36,6 +36,8 @@ RUN pipenv install --system
 
 # Layer 7. Copy project
 COPY . /usr/src/app_djtwitter_clone/
+
+RUN chmod +x ./entrypoint.sh
 
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app_djtwitter_clone/entrypoint.sh"]

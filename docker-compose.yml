@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   db:
-    container_name: postgres_container
+    container_name: dj_demo_app_postgres_container
     image: "postgres" # use latest official postgres version
     ports:
       - "5432:5432"
