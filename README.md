@@ -20,8 +20,10 @@ Next. In repo directory.
 * docker-compose way
     - Build the new image and spin up the two containers:
         - `$ docker-compose up -d --build`
-    - Run the migrations:
-        - `$ docker-compose exec web python manage.py migrate --noinput`
+    - [OPTIONAL] Database flush: if we want delete data from previous db volumes (but keep DB tables):
+        - `$ docker-compose exec web python manage.py flush --no-input`
+    - Migrate command:
+        - `$ docker-compose exec web python manage.py migrate`
     - Ensure the default Django tables were created:
         - `$ docker-compose exec db psql --username=postgres --dbname=postgres`
             - `postgres=# \l`
@@ -30,8 +32,8 @@ Next. In repo directory.
             - `postgres=# \q`
     - Create superuser
         - `$ docker-compose exec web python manage.py createsuperuser`
-    - When you're done, don't forget to close down your Docker containers.
+    - When you're done, don't forget to close down your containers.
         - `$ docker-compose down`
-        - `$ docker-compose down -v` to remove the volumes along with the containers.
+        - OR `$ docker-compose down -v` to remove the volumes along with the containers.
 
 ### Create

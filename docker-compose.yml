@@ -15,9 +15,9 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   web:
-    image: ivanprytula/dj_twitter_clone:0.1
-    #    build:
-    #      context: . # build from Dockerfile in project root dir
+#    image: ivanprytula/dj_twitter_clone:0.1
+    build:
+      context: . # build from Dockerfile in project root dir
     # Create a volume so we could edit the code without rebuilding container
     volumes:
       - .:/usr/src/app_djtwitter_clone
