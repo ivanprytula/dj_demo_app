@@ -13,7 +13,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # that follow it in the Dockerfile. --> /path/to/workdir
 WORKDIR /usr/src/app_djtwitter_clone
 
-# Layer 3. Install psycopg2 dependencies
+# Layer 3. Install psycopg2 and other dependencies
 RUN apt-get update \
     && apt-get install -qq -y --no-install-recommends build-essential libpq-dev gcc netcat \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -29,7 +29,6 @@ RUN pip install --upgrade pip && pip install pipenv
 # generally speaking, COPY is preferred.
 # OR shorthand: Pipfile* [ /usr/src/...]
 COPY Pipfile Pipfile.lock /usr/src/app_djtwitter_clone/
-
 # Layer 6.
 # [packages] [dev-packages]
 RUN pipenv install --system
@@ -37,7 +36,6 @@ RUN pipenv install --system
 # Layer 7. Copy project
 COPY . /usr/src/app_djtwitter_clone/
 
-RUN chmod +x ./entrypoint.sh
-
+RUN chmod +x setup_scripts/dev/*
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/app_djtwitter_clone/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app_djtwitter_clone/setup_scripts/dev/entrypoint.sh"]

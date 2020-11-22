@@ -1,0 +1,17 @@
+FROM python:3.9.0-slim-buster
+LABEL maintainer="Ivan Prytula <ivanprytula87@gmail.com>"
+
+ENV PYTONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+# create directory for the app user
+RUN mkdir -p /home/app
+
+# create the app user
+RUN addgroup -S app && adduser -S app -G app
+
+# create the appropriate directories
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME

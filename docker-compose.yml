@@ -1,6 +1,6 @@
-version: '3.7'
-
+version: "3.7"
 services:
+
   db:
     container_name: dj_demo_app_postgres_container
     image: "postgres" # use latest official postgres version
@@ -8,30 +8,38 @@ services:
       - "5432:5432"
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    # Environment variables declared below override values in .env files
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
   web:
-#    image: ivanprytula/dj_twitter_clone:0.1
+    #    image: ivanprytula/dj_twitter_clone:0.1
     build:
       context: . # build from Dockerfile in project root dir
-    # Create a volume so we could edit the code without rebuilding container
+    # Create a volume: we could edit the code in real-time without rebuilding container
     volumes:
       - .:/usr/src/app_djtwitter_clone
     #  maps ports and container code/database to local filesystem
     ports:
       - "8000:8000"
+    networks:
+      - backend
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
     env_file:
-      - .env.dev
+      - ./.env.dev
     depends_on:
       - db
     links:
       - "db:sql_database"
+
+networks:
+  backend:
 
 volumes:
   postgres_data:
