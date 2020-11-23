@@ -16,3 +16,6 @@ gunicorn = "==20.0.4"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+check_envs = "python -c \"print('Check your .env files')\""
