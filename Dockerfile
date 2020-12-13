@@ -7,16 +7,24 @@ ENV PYTONUNBUFFERED 1
 # Python won't try to write .pyc files
 ENV PYTHONDONTWRITEBYTECODE 1
 
-# Layer 2. Set work directory for the app
+ENV USER inoxpyivan
+ENV USERAPPHOME /usr/src/app_djtwitter_clone
+
+ARG buildno
+
+RUN echo "Build number: $buildno"
+
+# Layer 2. Set up the app directory (Docker will create it for us)
 # The WORKDIR instruction sets the working directory for any
 # RUN, CMD, ENTRYPOINT, COPY and ADD instructions
 # that follow it in the Dockerfile. --> /path/to/workdir
-WORKDIR /usr/src/app_djtwitter_clone
+WORKDIR $USERAPPHOME
 
 # Layer 3. Install psycopg2 and other dependencies
-RUN apt-get update \
-    && apt-get install -qq -y --no-install-recommends build-essential libpq-dev gcc netcat \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update &&  \
+    apt-get install -qq -y --no-install-recommends build-essential libpq-dev gcc netcat && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Layer 4. Install dependencies
 RUN pip install --upgrade pip && pip install pipenv
@@ -28,14 +36,25 @@ RUN pip install --upgrade pip && pip install pipenv
 # Although ADD and COPY are functionally similar,
 # generally speaking, COPY is preferred.
 # OR shorthand: Pipfile* [ /usr/src/...]
-COPY Pipfile Pipfile.lock /usr/src/app_djtwitter_clone/
+COPY Pipfile Pipfile.lock $USERAPPHOME/
+
 # Layer 6.
-# [packages] [dev-packages]
-RUN pipenv install --system
+RUN pipenv install --system --clear --deploy
 
 # Layer 7. Copy project
-COPY . /usr/src/app_djtwitter_clone/
+COPY . $USERAPPHOME/
 
-RUN chmod +x setup_scripts/dev/*
-# run entrypoint.sh
-ENTRYPOINT ["/usr/src/app_djtwitter_clone/setup_scripts/dev/entrypoint.sh"]
+RUN mkdir -p /vol/web/media
+RUN mkdir -p /vol/web/static
+
+# Create and switch to a new user
+
+RUN adduser --quiet --disabled-login --disabled-password $USER
+# set password
+RUN echo "inoxpyivan:inoxpyivan" | chpasswd
+RUN chown -R $USER:$USER /vol
+RUN chmod -R 755 /vol/web
+USER $USER
+
+# Provide defaults for executing container
+CMD ["sh", "-c", "entrypoint.sh"]

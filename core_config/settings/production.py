@@ -6,7 +6,7 @@ from decouple import Csv, AutoConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-config = AutoConfig(search_path=BASE_DIR / '/envs_vars/.env.prod')
+config = AutoConfig(search_path=BASE_DIR / 'deploy/prod/.env')
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -19,6 +19,8 @@ DATABASES = {
         cast=dj_database_url.parse
     )
 }
+
+STATIC_ROOT = BASE_DIR / 'vol/web/static'
 
 # AWS_ACCESS_KEY_ID = config('SPACES_ACCESS_KEY')
 # AWS_SECRET_ACCESS_KEY = config('SPACES_SECRET_ACCESS_KEY')

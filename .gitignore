@@ -6,11 +6,10 @@
 # Environments
 venv/
 env/
-.env.dev
-.env.prod
-.env.prod.db
 .venv
 ENV/
+deploy/dev/.env
+deploy/prod/.env
 
 ### Python template
 # Byte-compiled / optimized / DLL files

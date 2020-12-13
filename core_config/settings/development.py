@@ -6,7 +6,7 @@ from decouple import Csv, AutoConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-config = AutoConfig(search_path=BASE_DIR / '/envs_vars/.env.dev')
+config = AutoConfig(search_path=BASE_DIR / 'deploy/dev/.env')
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -20,6 +20,8 @@ DATABASES = {
         cast=dj_database_url.parse
     )
 }
+
+STATIC_ROOT = BASE_DIR / 'vol/web/static'
 
 # Email sending
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -5,7 +5,8 @@ services:
     container_name: dj_demo_app_postgres_container
     image: "postgres" # use latest official postgres version
     ports:
-      - "5432:5432"
+      # let's Docker decide itself what other port to use in case we already have running postgresql service on host
+      - "5432"
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -18,7 +19,6 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   web:
-    #    image: ivanprytula/dj_twitter_clone:0.1
     build:
       context: . # build from Dockerfile in project root dir
     # Create a volume: we could edit the code in real-time without rebuilding container
@@ -29,10 +29,10 @@ services:
       - "8000:8000"
     networks:
       - backend
+    env_file:
+      - ./deploy/dev/.env
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
-    env_file:
-      - ./.env.dev
     depends_on:
       - db
     links:
