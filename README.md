@@ -35,3 +35,35 @@ Next. In application's root directory...
 
 `$ docker-compose -f deploy/prod/docker-compose.prod.yml build --build-arg buildno=0.y.z`
 `$ docker-compose -f deploy/prod/docker-compose.prod.yml up`
+
+[comment]: <> (# build the flask container)
+
+[comment]: <> (docker build -t prakhar1989/foodtrucks-web .)
+
+[comment]: <> (# create the network)
+
+[comment]: <> (docker network create foodtrucks-net)
+
+[comment]: <> (# start the ES container)
+
+[comment]: <> (docker run -d --name es --net foodtrucks-net -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node")
+
+[comment]: <> (docker.elastic.co/elasticsearch/elasticsearch:6.3.2)
+
+[comment]: <> (# start the flask app container)
+
+[comment]: <> (docker run -d --net foodtrucks-net -p 5000:5000 --name foodtrucks-web prakhar1989/foodtrucks-web)
+
+----------------------------------------
+
+[comment]: <> (init-user.sh)
+
+[comment]: <> (set -e)
+
+[comment]: <> (psql -v ON_ERROR_STOP=1 --username postgres <<-EOSQL CREATE DATABASE cars_db; CREATE USER cars_admin WITH PASSWORD ')
+
+[comment]: <> (root'; ALTER ROLE cars_admin SET client_encoding TO 'utf8'; ALTER ROLE cars_admin SET default_transaction_isolation TO ')
+
+[comment]: <> (read committed'; ALTER ROLE cars_admin SET timezone TO 'UTC'; GRANT ALL PRIVILEGES ON DATABASE cars_db TO cars_admin;)
+
+[comment]: <> (EOSQL)

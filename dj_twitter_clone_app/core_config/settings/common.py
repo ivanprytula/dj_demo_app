@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-# BASE_DIR {PosixPath} /home/ivanp/PycharmProjects/dj_demo_app
+# BASE_DIR {PosixPath} /home/ivanp/PycharmProjects/dj_twitter_clone_app
 # We must add third 'parent' since we separate settings and put them into
 # sub-folder
 

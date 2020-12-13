@@ -13,7 +13,7 @@ docker-compose up --build
 docker-compose exec web python manage.py makemigrations
 
 #[OPTIONAL] Post-check whether migrations were applied successfully
-#docker-compose exec web python manage.py showmigrations -l
+#docker-compose exec web python manage.py showmigrations -l --verbosity 2
 
 docker-compose exec web python manage.py migrate
 

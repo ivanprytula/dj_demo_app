@@ -42,7 +42,7 @@ COPY Pipfile Pipfile.lock $USERAPPHOME/
 RUN pipenv install --system --clear --deploy
 
 # Layer 7. Copy project
-COPY . $USERAPPHOME/
+COPY dj_twitter_clone_app $USERAPPHOME/
 
 RUN mkdir -p /vol/web/media
 RUN mkdir -p /vol/web/static
@@ -57,4 +57,4 @@ RUN chmod -R 755 /vol/web
 USER $USER
 
 # Provide defaults for executing container
-CMD ["sh", "-c", "entrypoint.sh"]
+CMD ["sh", "-c", "$USERAPPHOME/entrypoint.sh"]

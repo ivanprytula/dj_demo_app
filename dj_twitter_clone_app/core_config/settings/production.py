@@ -5,8 +5,9 @@ import dj_database_url
 from decouple import Csv, AutoConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+ENV_BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
-config = AutoConfig(search_path=BASE_DIR / 'deploy/prod/.env')
+config = AutoConfig(search_path=ENV_BASE_DIR / '/deploy/prod/.env')
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
