@@ -33,7 +33,7 @@ Next. In application's root directory...
 
 ## Build _production grade_ image
 
-`$ docker-compose -f deploy/prod/docker-compose.prod.yml build --build-arg buildno=0.y.z`
+`$ docker-compose -f deploy/prod/docker-compose.prod.yml build`
 `$ docker-compose -f deploy/prod/docker-compose.prod.yml up`
 
 [comment]: <> (# build the flask container)

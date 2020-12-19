@@ -10,9 +10,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV USER inoxpyivan
 ENV USERAPPHOME /usr/src/app_djtwitter_clone
 
-ARG buildno
-
-RUN echo "Build number: $buildno"
 
 # Layer 2. Set up the app directory (Docker will create it for us)
 # The WORKDIR instruction sets the working directory for any

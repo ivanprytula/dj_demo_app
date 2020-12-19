@@ -10,14 +10,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - backend
+    environment:
+      - POSTGRES_DB=djtwitter_db_prod
+      - POSTGRES_USER=inoxpyivanprod
+      - POSTGRES_PASSWORD=inoxpyivanpswdprod
 
   web:
-    build:
-      context: ./deploy/prod
-      dockerfile: Dockerfile.prod
-      args:
-        - buildno
-    image: ivanprytula/dj_twitter_clone:${buildno}
+    build: .
+    image: ivanprytula/dj_twitter_clone
     ports:
       - "8000:8000"
     networks:
