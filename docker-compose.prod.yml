@@ -12,7 +12,7 @@ services:
       - backend
     environment:
       - POSTGRES_DB=djtwitter_db_prod
-      - POSTGRES_USER=inoxpyivanprod
+      - POSTGRES_USER=inoxpyivan
       - POSTGRES_PASSWORD=inoxpyivanpswdprod
 
   web:
