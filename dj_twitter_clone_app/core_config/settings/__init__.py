@@ -9,6 +9,8 @@ import sys
 from .common import *
 from .production import *
 
+# On production server remove dev settings file or don't push it to the branch
+# which will be used for production [staging] deployment
 try:
     from .development import *
 except ImportError:

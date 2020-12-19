@@ -8,8 +8,10 @@ Next. In application's root directory...
 ### Classic way:
 
 - `pipenv install --dev`
-- See NB:comment in `deploy/dev/.env`
-- `./manage.py migrate`
+- See NB:comments
+    - in `deploy/dev/.env`
+    - in `dj_twitter_clone_app/core_config/settings/__init__.py`
+- `./manage.py migrate --settings=core_config.settings.development`
 - [OPTIONAL] Check that all migrations were applied
   - `./manage.py showmigrations -l`
 - `./manage.py runserver 8001`
