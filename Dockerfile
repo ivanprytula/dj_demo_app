@@ -41,16 +41,16 @@ RUN pipenv install --system --clear --deploy
 # Layer 7. Copy project
 COPY dj_twitter_clone_app $USERAPPHOME/
 
-RUN mkdir -p /vol/web/media
-RUN mkdir -p /vol/web/static
-
 # Create and switch to a new user
-
 RUN adduser --quiet --disabled-login --disabled-password $USER
+
 # set password
 RUN echo "inoxpyivan:inoxpyivan" | chpasswd
-RUN chown -R $USER:$USER /vol
-RUN chmod -R 755 /vol/web
+
+# chown all the files to the inoxpyivan user
+RUN chown -R $USER:$USER $USERAPPHOME
+
+# change to the inoxpyivan user
 USER $USER
 
 # Provide defaults for executing container

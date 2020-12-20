@@ -1,17 +1,20 @@
 #!/bin/bash
 
-docker-compose up
-
 # After some work was done which demands image re-building: build and start services again
-docker-compose build --build-arg buildno="put value"
-docker-compose up
+docker-compose -f docker-compose.prod.yml build
+docker-compose -f docker-compose.prod.yml up
 
 #[OPTIONAL] Database flush: if we want delete data from previous db volumes (but keep DB tables):
 #docker-compose exec web python manage.py flush --no-input`
 
 # *** Run the commands below in new terminal window
-# Migrate command
+
+#[OPTIONAL] Searches for one or more relative paths with the enabled finders.
+#docker-compose exec web python manage.py findstatic staticfile [staticfile ...]
+# for example, ... css/base.css
+
 docker-compose exec web python manage.py collectstatic --noinput
+# Migrate command
 docker-compose exec web python manage.py makemigrations
 
 #[OPTIONAL] Post-check whether migrations were applied successfully

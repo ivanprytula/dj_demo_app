@@ -34,9 +34,10 @@ Next. In application's root directory...
 3. `setup_scripts/dev_setup_docker.sh`
 
 ## Build _production grade_ image
-
-`$ docker-compose -f docker-compose.prod.yml build`
-`$ docker-compose -f docker-compose.prod.yml up`
+- Refer to `setup_scripts/prod_setup_docker.sh` for detailed description:
+  - `$ docker-compose -f docker-compose.prod.yml build`
+  - `$ docker-compose -f docker-compose.prod.yml up`
+  - `$ docker-compose -f docker-compose.prod.yml exec web REQUIRED_COMMAND [REQUIRED_COMMAND ...]`
 
 [comment]: <> (# build the flask container)
 

@@ -17,9 +17,9 @@ services:
 
   web:
     build: .
-    image: ivanprytula/dj_twitter_clone
+    image: ivanprytula/dj_twitter_clone:1.0
     ports:
-      - "8000:8000"
+      - 8000:8000
     networks:
       - backend
     env_file:
