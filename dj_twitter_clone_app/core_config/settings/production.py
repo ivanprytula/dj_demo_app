@@ -1,4 +1,10 @@
-"""Production envs."""
+"""Production envs.
+
+Decouple always searches for Options in this order:
+ - Environment variables;
+ - Repository: ini or .env file;
+ - default argument passed to config.
+"""
 from pathlib import Path
 
 import dj_database_url
@@ -21,7 +27,7 @@ DATABASES = {
     )
 }
 
-STATIC_ROOT = BASE_DIR / 'vol/web/static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # AWS_ACCESS_KEY_ID = config('SPACES_ACCESS_KEY')
 # AWS_SECRET_ACCESS_KEY = config('SPACES_SECRET_ACCESS_KEY')

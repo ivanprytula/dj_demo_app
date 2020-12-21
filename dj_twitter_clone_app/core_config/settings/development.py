@@ -1,4 +1,10 @@
-"""Development/local envs."""
+"""Development/local envs.
+
+Decouple always searches for Options in this order:
+ - Environment variables;
+ - Repository: ini or .env file;
+ - default argument passed to config.
+"""
 from pathlib import Path
 
 import dj_database_url
@@ -22,7 +28,7 @@ DATABASES = {
     )
 }
 
-STATIC_ROOT = BASE_DIR / 'vol/web/static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Email sending
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -14,4 +14,4 @@ from .production import *
 try:
     from .development import *
 except ImportError:
-    sys.exit(1)
+    sys.exc_info()
