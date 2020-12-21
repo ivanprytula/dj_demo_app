@@ -1,9 +1,8 @@
 version: '3'
 services:
-  es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    cpu_shares: 100
-    mem_limit: 3621440000
+
+  db:
+    image: postgres
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
@@ -11,20 +10,28 @@ services:
     logging:
       driver: awslogs
       options:
-        awslogs-group: foodtrucks
-        awslogs-region: eu-central-1
-        awslogs-stream-prefix: es
+        awslogs-group: djtwitter
+        awslogs-region: us-east-2
+        awslogs-stream-prefix: db
+
   web:
-    image: ivanprytula/ft:latest
-    cpu_shares: 100
-    mem_limit: 262144000
-    ports:
-      - "80:5000"
+    image: ivanprytula/dj_twitter_clone:1.0
+    expose:
+      - 8000
     links:
-      - es
+      - db
     logging:
       driver: awslogs
       options:
-        awslogs-group: foodtrucks
-        awslogs-region: eu-central-1
+        awslogs-group: djtwitter
+        awslogs-region: us-east-2
         awslogs-stream-prefix: web
+
+    nginx:
+      image: ivanprytula/djtwnginx-demo:1.0
+      volumes:
+        - static_volume:/usr/src/app_djtwitter_clone/staticfiles
+      ports:
+        - 1337:80
+      depends_on:
+        - web
