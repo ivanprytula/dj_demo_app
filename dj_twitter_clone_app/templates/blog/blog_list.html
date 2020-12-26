@@ -10,6 +10,12 @@
         <h1>Blog Index</h1>
         <hr>
 
+        <button class="btn btn-outline-light btn-sm">
+            <a class="nav-link" href="{% url 'blog:post_new' %}">Add new post</a>
+        </button>
+
+        <hr>
+
         {% if messages %}
             <ul class="messages" style="background-color:#ccc;">
                 {% for message in messages %}
@@ -35,6 +41,7 @@
         {% empty %}
             <p>Sorry, no tweets were posted...</p>
         {% endfor %}
+
     </div>
 
     {% if is_paginated %}

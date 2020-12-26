@@ -22,7 +22,7 @@ WORKDIR $USERAPPHOME
 
 # Install psycopg2 and other dependencies
 RUN apt-get update &&  \
-    apt-get install -qq -y --no-install-recommends build-essential libpq-dev gcc netcat && \
+    apt-get install -qq -y --no-install-recommends build-essential libpq-dev gcc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -56,4 +56,4 @@ RUN chown -R $USER:$USER $USERAPPHOME
 USER $USER
 
 # Provide defaults for executing container
-CMD ["sh", "-c", "$USERAPPHOME/entrypoint.sh"]
+CMD ["python", "manage.py runserver 0.0.0.0:8000"]

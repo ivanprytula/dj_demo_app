@@ -21,7 +21,7 @@ services:
   web:
     build:
       context: . # build from Dockerfile in project root dir
-    image: ivanprytula/dj_twitter_clone:0.1
+    image: ivanprytula/dj_twitter_clone:0.2
     # Create a volume: we could edit the code in real-time without rebuilding container
     volumes:
       - ./dj_twitter_clone_app:/usr/src/app_djtwitter_clone
